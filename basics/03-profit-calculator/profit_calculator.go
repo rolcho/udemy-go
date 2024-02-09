@@ -11,7 +11,7 @@ func main() {
 	taxRate := getUserInput("Tax Rate")
 
 	e, p, r := calculateFinance(revenue, expenses, taxRate)
-	t := textFinance(e, p, r)
+	t := formatFinanceText(e, p, r)
 
 	fmt.Print(t)
 }
@@ -29,7 +29,7 @@ func calculateFinance(revenue, expenses, taxRate float64) (ebt float64, profit f
 	return
 }
 
-func textFinance(ebt, profit, ratio float64) (formattedResult string) {
+func formatFinanceText(ebt, profit, ratio float64) (formattedResult string) {
 	formattedEbt := fmt.Sprintf("EBT: %v\n", ebt)
 	formattedProfit := fmt.Sprintf("Profit: %v\n", profit)
 	formattedRatio := fmt.Sprintf("Ratio: %.2f\n", ratio)
