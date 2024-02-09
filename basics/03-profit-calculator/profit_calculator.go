@@ -5,21 +5,21 @@ import (
 )
 
 func main() {
-	var revenue, expenses, taxRate float64
 
-	fmt.Print("Revenue: ")
-	fmt.Scan(&revenue)
-
-	fmt.Print("Expenses: ")
-	fmt.Scan(&expenses)
-
-	fmt.Print("Tax Rate: ")
-	fmt.Scan(&taxRate)
+	revenue := inputValue("Revenue")
+	expenses := inputValue("Expenses")
+	taxRate := inputValue("Tax Rate")
 
 	e, p, r := profitCalculator(revenue, expenses, taxRate)
 	t := printProfitResult(e, p, r)
 
 	fmt.Print(t)
+}
+
+func inputValue(message string) (value float64) {
+	fmt.Print(message, ": ")
+	fmt.Scan(&value)
+	return
 }
 
 func profitCalculator(revenue, expenses, taxRate float64) (ebt float64, profit float64, ratio float64) {
