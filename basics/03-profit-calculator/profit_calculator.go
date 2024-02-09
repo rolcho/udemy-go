@@ -22,16 +22,17 @@ func main() {
 	fmt.Print(t)
 }
 
-func profitCalculator(revenue, expenses, taxRate float64) (float64, float64, float64) {
-	ebt := revenue - expenses
-	profit := ebt * (100 - taxRate) / 100
-	ratio := ebt / profit
-	return ebt, profit, ratio
+func profitCalculator(revenue, expenses, taxRate float64) (ebt float64, profit float64, ratio float64) {
+	ebt = revenue - expenses
+	profit = ebt * (100 - taxRate) / 100
+	ratio = ebt / profit
+	return
 }
 
-func printProfitResult(ebt, profit, ratio float64) string {
+func printProfitResult(ebt, profit, ratio float64) (formattedResult string) {
 	formattedEbt := fmt.Sprintf("EBT: %v\n", ebt)
 	formattedProfit := fmt.Sprintf("Profit: %v\n", profit)
 	formattedRatio := fmt.Sprintf("Ratio: %.2f\n", ratio)
-	return formattedEbt + formattedProfit + formattedRatio
+	formattedResult = formattedEbt + formattedProfit + formattedRatio
+	return
 }
