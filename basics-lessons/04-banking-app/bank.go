@@ -14,7 +14,7 @@ var loadedBalance float64
 func main() {
 	var isLoggedin bool = true
 
-	checkBalance()
+	loadedBalance = checkBalance()
 
 	for isLoggedin {
 		showMenu()
@@ -26,12 +26,12 @@ func main() {
 
 }
 
-func setBalanceInFile(balance float64) {
+func storeBalance(balance float64) {
 	balanceText := fmt.Sprint(balance)
 	os.WriteFile(accountBalance, []byte(balanceText), 0644)
 }
 
-func getBalanceFromFile() (float64, error) {
+func getBalance() (float64, error) {
 	data, err := os.ReadFile(accountBalance)
 
 	if err != nil {
@@ -75,7 +75,7 @@ func processChoice(choice int, balance float64) bool {
 }
 
 func checkBalance() float64 {
-	balance, err := getBalanceFromFile()
+	balance, err := getBalance()
 
 	if err != nil {
 		showError(err)
@@ -96,7 +96,7 @@ func depositMoney(balance float64) float64 {
 	}
 
 	balance += amount
-	setBalanceInFile(balance)
+	storeBalance(balance)
 	fmt.Println("Deposited:", amount)
 	fmt.Println("New balance:", balance)
 
@@ -119,7 +119,7 @@ func withdrawMoney(balance float64) float64 {
 	}
 
 	balance -= amount
-	setBalanceInFile(balance)
+	storeBalance(balance)
 	fmt.Println("Withdrawn:", amount)
 	fmt.Println("New balance:", balance)
 	return balance
