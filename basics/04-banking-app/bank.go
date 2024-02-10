@@ -14,5 +14,10 @@ func main() {
 	fmt.Print("Enter your choice: ")
 	fmt.Scanln(&choice)
 
+	if choice < 1 || choice > 4 {
+		fmt.Println("Invalid choice!")
+		return
+	}
+
 	fmt.Println("You selected:", choice)
 }
