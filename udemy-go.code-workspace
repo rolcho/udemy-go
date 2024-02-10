@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "packages-lessons"
+		},
+		{
+			"path": "pointers-lesson"
 		}
 	],
 	"settings": {}
