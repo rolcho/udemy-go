@@ -12,9 +12,15 @@ type user struct {
 	createdAt time.Time
 }
 
-// reciever argument
+// reciever argument passing value
 func (u user) outputUserDetail() {
 	fmt.Println(u.firstName, u.lastName, u.birthDate)
+}
+
+// reciever argument passing pointer
+func (u *user) clearUserName() {
+	u.firstName = ""
+	u.lastName = ""
 }
 
 func main() {
@@ -30,6 +36,8 @@ func main() {
 	}
 
 	// ... do something awesome with that gathered data!
+	appUser.outputUserDetail()
+	appUser.clearUserName()
 	appUser.outputUserDetail()
 }
 
