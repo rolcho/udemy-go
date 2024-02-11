@@ -23,7 +23,8 @@ func (u *User) ClearUserName() {
 	u.lastName = ""
 }
 
-func NewUser(firstName, lastName, birthDate string) (*User, error) {
+// external package can only use New
+func New(firstName, lastName, birthDate string) (*User, error) {
 	if firstName == "" || lastName == "" || birthDate == "" {
 		return nil, errors.New("missing input fields")
 	}
