@@ -23,17 +23,22 @@ func (u *user) clearUserName() {
 	u.lastName = ""
 }
 
+// constructor function: conventional naming newType
+func newUser(firstName, lastName, birthDate string) *user {
+	return &user{
+		firstName: firstName,
+		lastName:  lastName,
+		birthDate: birthDate,
+		createdAt: time.Now(),
+	}
+}
+
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthDate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	appUser := user{
-		firstName: userFirstName,
-		lastName:  userLastName,
-		birthDate: userBirthDate,
-		createdAt: time.Now(),
-	}
+	appUser := newUser(userFirstName, userLastName, userBirthDate)
 
 	// ... do something awesome with that gathered data!
 	appUser.outputUserDetail()
