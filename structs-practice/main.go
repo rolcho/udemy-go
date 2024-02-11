@@ -51,6 +51,12 @@ func main() {
 }
 
 func printSomething(value any) {
+	typedValue, ok := value.(int)
+
+	if ok {
+		fmt.Printf("I can do anything with type integer: %v\n", typedValue)
+	}
+
 	switch value.(type) {
 	case int:
 		fmt.Println("integer: ", value)
