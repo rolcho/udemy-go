@@ -10,9 +10,9 @@ import (
 )
 
 type Note struct {
-	Title     string    // Modified: exported field
-	Content   string    // Modified: exported field
-	CreatedAt time.Time // Modified: exported field
+	Title     string
+	Content   string
+	CreatedAt time.Time
 }
 
 func (n Note) Display() {
