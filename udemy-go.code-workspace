@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "structs-lessons"
+		},
+		{
+			"path": "structs-practice"
 		}
 	],
 	"settings": {}
