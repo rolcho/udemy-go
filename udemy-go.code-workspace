@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "pointers-lesson"
+		},
+		{
+			"path": "structs-lessons"
 		}
 	],
 	"settings": {}
