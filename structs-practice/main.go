@@ -19,7 +19,7 @@ func main() {
 		return
 	}
 
-	userNote.DisplayNote()
+	userNote.Display()
 }
 
 func getNoteData() (string, string) {
