@@ -6,26 +6,53 @@ import (
 	"os"
 	"strings"
 
-	"example.com/user-input/note"
+	"example.com/structs/note"
+	"example.com/structs/todo"
 )
+
+type saver interface {
+	Save() error
+}
 
 func main() {
 	title, content := getNoteData()
+	todoContent := getUserInput("Todo")
 
-	userNote, err := note.New(title, content)
-
+	todo, err := todo.New(todoContent)
 	if err != nil {
 		fmt.Printf("ERROR: %v\n", err)
 		return
 	}
 
+	userNote, err := note.New(title, content)
+	if err != nil {
+		fmt.Printf("ERROR: %v\n", err)
+		return
+	}
+
+	err = saveData(userNote)
+	if err != nil {
+		return
+	}
+
+	err = saveData(todo)
+	if err != nil {
+		return
+	}
+
 	userNote.Display()
-	err = userNote.Save()
+	todo.Display()
+}
+
+func saveData(s saver) error {
+	err := s.Save()
 
 	if err != nil {
 		fmt.Println("Saving failed")
-		return
+		return err
 	}
+
+	return nil
 }
 
 func getNoteData() (string, string) {
