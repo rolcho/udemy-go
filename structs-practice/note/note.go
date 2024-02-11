@@ -9,10 +9,16 @@ import (
 	"time"
 )
 
+type User struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
 type Note struct {
-	Title     string
-	Content   string
-	CreatedAt time.Time
+	Title     string    `json:"title"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"createdAt"`
+	User      User      `json:"user"`
 }
 
 func (n Note) Display() {
@@ -41,5 +47,9 @@ func New(title, content string) (Note, error) {
 		Title:     title,
 		Content:   content,
 		CreatedAt: time.Now(),
+		User: User{
+			Name:  "Anonymous",
+			Email: "ab@c.de",
+		},
 	}, nil
 }
