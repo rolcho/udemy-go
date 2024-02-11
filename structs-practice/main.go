@@ -23,6 +23,7 @@ func main() {
 	printSomething(1)
 	printSomething(1.5)
 	printSomething("1")
+	printSomething(add(1, 1.5))
 
 	title, content := getNoteData()
 	todoContent := getUserInput("Todo")
@@ -48,6 +49,11 @@ func main() {
 	if err != nil {
 		return
 	}
+}
+
+// Generic type
+func add[T int | float64 | string](a, b T) T {
+	return a + b
 }
 
 func printSomething(value any) {
