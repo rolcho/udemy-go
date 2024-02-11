@@ -6,7 +6,19 @@ import (
 	"example.com/structs/user"
 )
 
+// custom type
+type str string
+
+// add method tocustom type
+func (text str) log() {
+	fmt.Println(text)
+}
+
 func main() {
+	//basic usage of custom type & method
+	var myName str = "Hi"
+	myName.log()
+
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthDate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
