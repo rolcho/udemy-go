@@ -2,7 +2,14 @@ package main
 
 import "fmt"
 
-type course map[string]float64
+type floatMap map[string]float64
+
+func (fm floatMap) Display() {
+	for k, v := range fm {
+		fmt.Println(k, v)
+	}
+
+}
 
 func main() {
 	websites := map[string]string{
@@ -18,10 +25,10 @@ func main() {
 	delete(websites, "microsoft")
 	fmt.Println(websites)
 
-	courseRatings := make(course, 3)
+	courseRatings := make(floatMap, 3)
 	courseRatings["go"] = 4.56
 	courseRatings["ionic"] = 4.34
 
-	fmt.Println(courseRatings)
+	courseRatings.Display()
 
 }
