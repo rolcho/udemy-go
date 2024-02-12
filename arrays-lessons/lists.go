@@ -13,7 +13,8 @@ func main() {
 	newProduct1 := Product{"id1", "Mac", 1199}
 	newProduct2 := Product{"id2", "PC", 1099}
 	newProduct3 := Product{"id3", "Mobile", 499}
-	products = append(products, newProduct1, newProduct2, newProduct3)
+	newProduct4 := Product{"id4", "TV", 599}
+	products = append(products, newProduct1, newProduct2, newProduct3, newProduct4)
 
 	fmt.Println(products)
 	fmt.Println(products[0])
@@ -34,7 +35,24 @@ func main() {
 	fmt.Println("fp [1]-> length:", featuredProducts)
 
 	fmt.Println("products | featured | highlighted array sub-slice -----------------")
-	highlightedProduct := featuredProducts[:1]
-	fmt.Println("Highlighted:", highlightedProduct)
+	highlightedProducts := featuredProducts[:2]
+	fmt.Println("Highlighted:", highlightedProducts)
+
+	fmt.Println("length, capacity ---------------")
+	fmt.Println("len():", len(featuredProducts))
+	fmt.Println("cap():", cap(featuredProducts))
+
+	fmt.Println("highlighted ---------------")
+	fmt.Println("len():", len(highlightedProducts))
+	fmt.Println("cap():", cap(highlightedProducts))
+	fmt.Println("hp:", highlightedProducts)
+	fmt.Println("fp:", featuredProducts)
+
+	highlightedProducts = highlightedProducts[:len(featuredProducts)]
+	fmt.Println("highlighted can be extended until [:i] ---------------")
+	fmt.Println("len():", len(highlightedProducts))
+	fmt.Println("cap():", cap(highlightedProducts))
+	fmt.Println("hp:", highlightedProducts)
+	fmt.Println("fp:", featuredProducts)
 
 }
