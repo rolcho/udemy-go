@@ -56,5 +56,5 @@ func main() {
 	fmt.Println("hp:", highlightedProducts)
 	fmt.Println("fp:", featuredProducts)
 
-	testStack()
+	testStack() //side experience
 }
