@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+type course map[string]float64
+
 func main() {
 	websites := map[string]string{
 		"google": "https://google.com",
@@ -15,4 +17,11 @@ func main() {
 
 	delete(websites, "microsoft")
 	fmt.Println(websites)
+
+	courseRatings := make(course, 3)
+	courseRatings["go"] = 4.56
+	courseRatings["ionic"] = 4.34
+
+	fmt.Println(courseRatings)
+
 }
