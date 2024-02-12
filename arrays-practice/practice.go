@@ -8,7 +8,7 @@ func main() {
 
 	// 1) Create a new array (!) that contains three hobbies you have
 	// 		Output (print) that array in the command line.
-	var hobbies [3]string = [3]string{"eat", "drink", "sleep"}
+	hobbies := [3]string{"eat", "drink", "sleep"}
 	fmt.Println(hobbies)
 
 	// 2) Also output more data about that array:
