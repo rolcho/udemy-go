@@ -9,7 +9,8 @@ type Product struct {
 }
 
 func main() {
-	var products []Product
+	var products []Product //acts like slice
+
 	newProduct1 := Product{"id1", "Mac", 1199}
 	newProduct2 := Product{"id2", "PC", 1099}
 	newProduct3 := Product{"id3", "Mobile", 499}
@@ -55,4 +56,5 @@ func main() {
 	fmt.Println("hp:", highlightedProducts)
 	fmt.Println("fp:", featuredProducts)
 
+	testStack()
 }
