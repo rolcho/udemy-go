@@ -4,7 +4,7 @@ import "fmt"
 
 type floatMap map[string]float64
 
-func (fm floatMap) Display() {
+func (fm floatMap) output() {
 	for k, v := range fm {
 		fmt.Println(k, v)
 	}
@@ -29,6 +29,6 @@ func main() {
 	courseRatings["go"] = 4.56
 	courseRatings["ionic"] = 4.34
 
-	courseRatings.Display()
+	courseRatings.output()
 
 }
