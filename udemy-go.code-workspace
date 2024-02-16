@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "maps-lesson"
+		},
+		{
+			"path": "function-lessons"
 		}
 	],
 	"settings": {}
