@@ -3,15 +3,17 @@ package main
 import "fmt"
 
 func main() {
+	s := sum(1, 5, 7, 12)
 
-	fact := factorial(6)
-	fmt.Println(fact)
+	fmt.Println(s)
 }
 
-func factorial(n int) int {
-	if n == 0 {
-		return 1
+func sum(numbers ...int) int {
+	s := 0
+
+	for _, n := range numbers {
+		s += n
 	}
 
-	return n * factorial(n-1)
+	return s
 }
