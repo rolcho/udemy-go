@@ -1,11 +1,9 @@
 package main
 
 import (
-	// "fmt"
 	"fmt"
 	"log"
 
-	// "example.com/concurrency/cmdmanager"
 	"example.com/concurrency/conversion"
 	"example.com/concurrency/filemanager"
 	"example.com/concurrency/prices"
@@ -20,6 +18,7 @@ func main() {
 	}
 
 	doneChans := make([]chan bool, len(taxRatesStr))
+	errorChans := make([]chan error, len(taxRatesStr))
 
 	taxRates, err := conversion.StringsToFloats(taxRatesStr)
 	if err != nil {
@@ -28,17 +27,20 @@ func main() {
 
 	for index, taxRate := range taxRates {
 		doneChans[index] = make(chan bool)
-		// pm := cmdmanager.New()
+		errorChans[index] = make(chan error)
 		pm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
 		priceJob := prices.NewTaxIncludedPriceJob(pm, taxRate)
-		go priceJob.Process(doneChans[index])
-
-		// if err := priceJob.Process(); err != nil {
-		// 	log.Output(0, "ERROR:"+err.Error())
-		// }
+		go priceJob.Process(doneChans[index], errorChans[index])
 	}
 
-	for _, doneChan := range doneChans {
-		<-doneChan
+	for index := range taxRatesStr {
+		select { //cases wait for one case channel
+		case err := <-errorChans[index]:
+			if err != nil {
+				log.Output(0, "ERROR:"+err.Error())
+			}
+		case <-doneChans[index]:
+			log.Output(0, "Done")
+		}
 	}
 }
