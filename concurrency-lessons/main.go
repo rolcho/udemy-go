@@ -17,7 +17,7 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	doneChans := make([]chan bool, len(taxRatesStr))
+	doneChans := make([]chan float64, len(taxRatesStr))
 	errorChans := make([]chan error, len(taxRatesStr))
 
 	taxRates, err := conversion.StringsToFloats(taxRatesStr)
@@ -26,10 +26,10 @@ func main() {
 	}
 
 	for index, taxRate := range taxRates {
-		doneChans[index] = make(chan bool)
+		doneChans[index] = make(chan float64)
 		errorChans[index] = make(chan error)
-		pm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
-		priceJob := prices.NewTaxIncludedPriceJob(pm, taxRate)
+		priceManager := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
+		priceJob := prices.NewTaxIncludedPriceJob(priceManager, taxRate)
 		go priceJob.Process(doneChans[index], errorChans[index])
 	}
 
@@ -40,7 +40,8 @@ func main() {
 				log.Output(0, "ERROR:"+err.Error())
 			}
 		case <-doneChans[index]:
-			log.Output(0, "Done")
+			message := fmt.Sprintf("Calculation done with %.0f percent\n", taxRates[index]*100)
+			log.Output(0, message)
 		}
 	}
 }

@@ -1,7 +1,9 @@
 package prices
 
 import (
+	"errors"
 	"fmt"
+	"time"
 
 	"example.com/concurrency/conversion"
 	"example.com/concurrency/iomanager"
@@ -31,9 +33,15 @@ func (job *TaxIncludedPriceJob) LoadPrices() error {
 	return nil
 }
 
-func (job *TaxIncludedPriceJob) Process(doneChan chan bool, errorChan chan error) {
+func (job *TaxIncludedPriceJob) Process(doneChan chan float64, errorChan chan error) {
 	if err := job.LoadPrices(); err != nil {
 		errorChan <- err
+		return
+	}
+	if job.TaxRate < 0.1 {
+		time.Sleep(500 * time.Millisecond)
+		m := fmt.Sprintf(" %.0f percent is too low", job.TaxRate*100)
+		errorChan <- errors.New(m)
 		return
 	}
 
@@ -46,7 +54,7 @@ func (job *TaxIncludedPriceJob) Process(doneChan chan bool, errorChan chan error
 	job.TaxIncludedPrices = result
 
 	job.IOManager.WriteResult(job)
-	doneChan <- true
+	doneChan <- job.TaxRate
 }
 
 func NewTaxIncludedPriceJob(iom iomanager.IOManager, taxRate float64) *TaxIncludedPriceJob {
