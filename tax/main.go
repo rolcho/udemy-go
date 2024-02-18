@@ -1,15 +1,30 @@
 package main
 
 import (
+	"log"
+
+	"example.com/tax/conversion"
+	"example.com/tax/filemanager"
 	"example.com/tax/prices"
 )
 
 func main() {
-	taxRates := []float64{0, 0.07, 0.1, 0.15}
+
+	taxRatesStr, err := filemanager.ReadLines("taxrates.txt")
+	if err != nil {
+		log.Panic(err.Error())
+	}
+
+	taxRates, err := conversion.StringsToFloats(taxRatesStr)
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
 	for _, taxRate := range taxRates {
 		priceJob := prices.NewTaxIncludedPriceJob(taxRate)
-		priceJob.Process()
+		if err := priceJob.Process("prices.txt"); err != nil {
+			log.Output(0, "ERROR:"+err.Error())
+		}
 	}
 
 }
