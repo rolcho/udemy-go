@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"log"
 
+	"example.com/tax/cmdmanager"
 	"example.com/tax/conversion"
 	"example.com/tax/filemanager"
 	"example.com/tax/prices"
@@ -23,9 +24,10 @@ func main() {
 	}
 
 	for _, taxRate := range taxRates {
-		fmPrice := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
-		priceJob := prices.NewTaxIncludedPriceJob(fmPrice, taxRate)
-		if err := priceJob.Process(fmPrice.InputFilePath); err != nil {
+		pm := cmdmanager.New()
+		// pm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
+		priceJob := prices.NewTaxIncludedPriceJob(pm, taxRate)
+		if err := priceJob.Process(); err != nil {
 			log.Output(0, "ERROR:"+err.Error())
 		}
 	}

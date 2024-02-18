@@ -29,3 +29,7 @@ func (cmd CmdManager) WriteResult(data interface{}) error {
 	fmt.Println(data)
 	return nil
 }
+
+func New() CmdManager {
+	return CmdManager{}
+}
