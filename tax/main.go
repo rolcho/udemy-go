@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"example.com/tax/conversion"
@@ -10,19 +11,21 @@ import (
 
 func main() {
 
-	taxRatesStr, err := filemanager.ReadLines("taxrates.txt")
+	fm := filemanager.New("taxrates.txt", "")
+	taxRatesStr, err := fm.ReadLines()
 	if err != nil {
 		log.Panic(err.Error())
 	}
 
 	taxRates, err := conversion.StringsToFloats(taxRatesStr)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatal(err.Error())
 	}
 
 	for _, taxRate := range taxRates {
-		priceJob := prices.NewTaxIncludedPriceJob(taxRate)
-		if err := priceJob.Process("prices.txt"); err != nil {
+		fmPrice := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
+		priceJob := prices.NewTaxIncludedPriceJob(fmPrice, taxRate)
+		if err := priceJob.Process(fmPrice.InputFilePath); err != nil {
 			log.Output(0, "ERROR:"+err.Error())
 		}
 	}
