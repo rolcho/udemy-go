@@ -21,14 +21,14 @@ func (fm FileManager) ReadLines() ([]string, error) {
 		return nil, errors.New(errMsg)
 	}
 
+	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 
 	var lines []string
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-
-	file.Close()
 
 	err = scanner.Err()
 
@@ -47,14 +47,14 @@ func (fm FileManager) WriteResult(data interface{}) error {
 		return errors.New("failed to write file")
 	}
 
+	defer file.Close() //deferred methods are executed LIFO
+
 	time.Sleep(3 * time.Second) //simulate slow process
 
 	encoder := json.NewEncoder(file)
 	if err := encoder.Encode(data); err != nil {
 		return errors.New("failed to convert data")
 	}
-
-	file.Close()
 
 	return nil
 }
