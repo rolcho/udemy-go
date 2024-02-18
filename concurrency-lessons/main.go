@@ -1,36 +1,36 @@
 package main
 
 import (
+	// "fmt"
 	"fmt"
-	"time"
+	"log"
+
+	// "example.com/concurrency/cmdmanager"
+	"example.com/concurrency/conversion"
+	"example.com/concurrency/filemanager"
+	"example.com/concurrency/prices"
 )
 
-func greet(phrase string, doneChan chan bool) {
-	fmt.Println("Hello!", phrase)
-	doneChan <- true
-}
-
-func slowGreet(phrase string, doneChan chan bool) {
-	time.Sleep(3 * time.Second) // simulate a slow, long-taking task
-	fmt.Println("Hello!", phrase)
-	doneChan <- true
-}
-
 func main() {
-	dones := make([]chan bool, 4)
-	// done := make(chan bool)
 
-	dones[0] = make(chan bool)
-	go greet("Nice to meet you!", dones[0])
-	dones[1] = make(chan bool)
-	go greet("How are you?", dones[1])
-	dones[2] = make(chan bool)
-	go slowGreet("How ... are ... you ...?", dones[2])
-	dones[3] = make(chan bool)
-	go greet("I hope you're liking the course!", dones[3])
+	fm := filemanager.New("taxrates.txt", "")
+	taxRatesStr, err := fm.ReadLines()
+	if err != nil {
+		log.Panic(err.Error())
+	}
 
-	for _, done := range dones {
-		<-done
+	taxRates, err := conversion.StringsToFloats(taxRatesStr)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	for _, taxRate := range taxRates {
+		// pm := cmdmanager.New()
+		pm := filemanager.New("prices.txt", fmt.Sprintf("result_%.0f.json", taxRate*100))
+		priceJob := prices.NewTaxIncludedPriceJob(pm, taxRate)
+		if err := priceJob.Process(); err != nil {
+			log.Output(0, "ERROR:"+err.Error())
+		}
 	}
 
 }
